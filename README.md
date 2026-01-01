@@ -1,66 +1,143 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Manajemen Toko - REST API (Laravel 11 + JWT)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API Backend untuk sistem **Manajemen Toko** sesuai technical test PT. Dazo Kreatif Indonesia.
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-11-red?logo=laravel)
+![JWT](https://img.shields.io/badge/JWT-Auth-black)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
+![PHP](https://img.shields.io/badge/PHP-8.2-orange)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   **Multi Level Toko**: Pusat, Cabang, Retail
+-   **Super Admin** dapat membuat dan mengelola toko
+-   **Auto Generate User**: Setiap toko baru otomatis dibuat 1 Admin + 1 Kasir
+-   **Role & Permission** menggunakan Spatie Laravel Permission
+-   **Admin Toko** dapat:
+    -   CRUD Produk
+    -   CRUD Kasir tambahan di tokonya sendiri
+    -   Melihat semua penjualan
+    -   Mengubah profile diri sendiri
+-   **Kasir** dapat:
+    -   Melihat detail produk
+    -   Melakukan penjualan (cart sederhana + pembayaran)
+    -   Melihat penjualan
+    -   Mengubah profile diri sendiri
+-   **Data Scoping**: Setiap user hanya melihat data toko miliknya (kecuali Super Admin)
+-   **Authentication**: JWT (stateless)
+-   **Pagination & Search** di semua list data
+-   **Error Handling** JSON yang rapi (401 Unauthenticated, 403 Unauthorized, dll)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack
 
-## Learning Laravel
+-   Laravel 11
+-   MySQL
+-   JWT Authentication (`php-open-source-saver/jwt-auth`)
+-   Spatie Laravel Permission v6
+-   PHP >= 8.2
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   PHP >= 8.2
+-   Composer
+-   MySQL
+-   Git
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+### 1. Clone repository
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone https://github.com/USERNAME/manajemen-toko-api.git
+cd manajemen-toko-api
+```
 
-### Premium Partners
+### 2. Install dependencies
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+composer install
+```
 
-## Contributing
+### 3. Copy & konfigurasi .env
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+Copy & konfigurasi .env
+```
 
-## Code of Conduct
+```bash
+Edit .env untuk database:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=manajemen_toko
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Security Vulnerabilities
+### 4. Generate key & JWT secret
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan key:generate
+php artisan jwt:secret
+```
 
-## License
+### 5. Migrate database + seed data test
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan migrate:fresh --seed
+```
+
+### 6. Jalankan server
+
+```bash
+php artisan serve
+```
+
+API berjalan di http://localhost:8000/api
+
+Database & ERDLihat file ERD_Manajemen_Toko.png atau ERD_Manajemen_Toko.pdf di root repository untuk diagram lengkap.Tabel Utama:users
+shops
+products
+sales
+sale_items
+payments
+Tabel Spatie: roles, permissions, model_has_roles, dll
+
+Catatan Tambahan
+
+-   Produk tidak memiliki stok (unlimited quantity)
+-   Pembayaran sederhana (cash dengan kembalian otomatis)
+-   Semua response JSON dengan struktur rapi
+-   Error handling lengkap & aman
+-   Data scoped per toko menggunakan Global Scope
+
+## API Endpoints
+
+| Method     | Endpoint         | Description                                  | Role Required | Request Body Example                                                                                        | Response Example        |
+| ---------- | ---------------- | -------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------- |
+| **POST**   | `/login`         | Login & dapatkan JWT token                   | Public        | `json { "email": "super@dazo.com", "password": "password" } `                                               | Token + user data       |
+| **GET**    | `/me`            | Lihat profile diri + role                    | Authenticated | -                                                                                                           | User + roles            |
+| **PUT**    | `/profile`       | Update profile diri (name, email, password)  | Authenticated | `json { "name": "Nama Baru", "password": "baru123" } `                                                      | Profile updated         |
+| **POST**   | `/logout`        | Logout (invalidate token)                    | Authenticated | -                                                                                                           | Logged out              |
+| **GET**    | `/shops`         | List toko (hanya super admin lihat semua)    | Super Admin   | -                                                                                                           | List shops              |
+| **POST**   | `/shops`         | Buat toko baru + auto generate admin & kasir | Super Admin   | `json { "name": "Toko Baru", "level": "cabang" } `                                                          | Shop + credentials      |
+| **GET**    | `/products`      | List produk di toko sendiri                  | Admin & Kasir | ?search=Indomie                                                                                             | Paginated products      |
+| **POST**   | `/products`      | Tambah produk                                | Admin Toko    | `json { "name": "Indomie", "description": "...", "price": 3500 } `                                          | Product created         |
+| **PUT**    | `/products/{id}` | Update produk                                | Admin Toko    | `json { "price": 4000 } `                                                                                   | Product updated         |
+| **DELETE** | `/products/{id}` | Hapus produk                                 | Admin Toko    | -                                                                                                           | Deleted                 |
+| **GET**    | `/cashiers`      | List kasir di toko sendiri                   | Admin Toko    | ?search=kasir                                                                                               | Paginated cashiers      |
+| **POST**   | `/cashiers`      | Tambah kasir baru                            | Admin Toko    | `json { "name": "Kasir Baru", "email": "email@toko.com", "password": "123456" } `                           | Kasir + password        |
+| **PUT**    | `/cashiers/{id}` | Update kasir lain                            | Admin Toko    | `json { "name": "Nama Baru" } `                                                                             | Updated                 |
+| **DELETE** | `/cashiers/{id}` | Hapus kasir lain                             | Admin Toko    | -                                                                                                           | Deleted                 |
+| **GET**    | `/sales`         | List penjualan di toko sendiri               | Admin & Kasir | ?search=1                                                                                                   | Paginated sales         |
+| **POST**   | `/sales`         | Buat penjualan baru (cart + payment)         | Admin & Kasir | `json { "items": [ { "product_id": 1, "quantity": 3 } ], "payment_method": "cash", "amount_paid": 50000 } ` | Sale detail + kembalian |
+| **GET**    | `/sales/{id}`    | Detail penjualan + items + payment           | Admin & Kasir | -                                                                                                           | Sale detail             |
+
+**Catatan:**
+
+-   Semua endpoint kecuali `/login` memerlukan header:  
+    `Authorization: Bearer [JWT_TOKEN]`  
+    `Accept: application/json`  
+    `Content-Type: application/json`
+-   Error response selalu JSON (401 Unauthenticated, 403 Unauthorized, 422 Validation, dll)
